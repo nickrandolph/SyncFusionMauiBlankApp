@@ -11,8 +11,8 @@ using Syncfusion.Maui.Charts;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
-using System.Reflection;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace SyncFusionMauiBlankApp.MauiControls;
 
@@ -32,6 +32,23 @@ public partial class EmbeddedControl : ContentView
 
         }
 #endif
+
+        Loaded += EmbeddedControl_Loaded;
+        SizeChanged += EmbeddedControl_SizeChanged;
+    }
+
+    private async void EmbeddedControl_SizeChanged(object? sender, EventArgs e)
+    {
+        await Task.Delay(2000);
+
+        //var chart = Chart;
+    }
+
+    private async void EmbeddedControl_Loaded(object? sender, EventArgs e)
+    {
+        await Task.Delay(2000);
+
+        //var chart = Chart;
     }
 }
 
@@ -693,4 +710,1219 @@ internal class SubtractClippingDrawable : IDrawable
             canvas.DrawImage(image, 10, 10, image.Width, image.Height);
         }
     }
+}
+
+
+public class TeamViewModel : INotifyPropertyChanged
+{
+    #region Fields
+
+    private ObservableCollection<Team> data;
+
+    #endregion
+
+    #region Constructor
+
+    /// <summary>
+    /// Initializes a new instance of the GettingStartedViewModel class. 
+    /// </summary>
+    public TeamViewModel()
+    {
+        this.data = new ObservableCollection<Team>();
+        this.AddRows();
+    }
+
+    #endregion
+    /// <summary>
+    /// Represents the method that will handle the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"></see> event raised when a property is changed on a component
+    /// </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// <summary>
+    /// Gets the Data.
+    /// </summary>
+    /// <value>The Data.</value>
+    public ObservableCollection<Team> Data
+    {
+        get { return this.data; }
+    }
+
+    #region updating code
+
+    /// <summary>
+    /// Adds the rows.
+    /// </summary>
+    private void AddRows()
+    {
+        this.data.Add(new Team("Cavaliers", .616, 0, 93, 58, "cavaliers.png", "East"));
+        this.data.Add(new Team("Clippers", .550, 10, 82, 67, "clippers.png", "West"));
+        this.data.Add(new Team("Denver", .514, 15, 76, 72, "denvernuggets.png", "Central"));
+        this.data.Add(new Team("Detroit", .513, 15, 77, 73, "detroitpistons.png", "East"));
+        this.data.Add(new Team("Golden State", .347, 40, 52, 98, "goldenstate.png", "West"));
+        this.data.Add(new Team("Los Angeles", .560, 0, 84, 66, "losangeles.png", "Central"));
+        this.data.Add(new Team("Mavericks", .547, 2, 82, 68, "mavericks.png", "East"));
+        this.data.Add(new Team("Memphis", .540, 3, 81, 69, "memphis.png", "West"));
+        this.data.Add(new Team("Miami", .464, 14, 70, 81, "miami.png", "Central"));
+        this.data.Add(new Team("Milwakke", .433, 19, 65, 85, "milwakke.png", "East"));
+        this.data.Add(new Team("New York", .642, 0, 97, 54, "newyork.png", "West"));
+        this.data.Add(new Team("Orlando", .510, 20, 77, 74, "orlando.png", "Central"));
+        this.data.Add(new Team("Thunder", .480, 24, 72, 78, "thunder_logo.png", "East"));
+    }
+
+    #endregion
+
+    #region INotifyPropertyChanged implementation
+
+    /// <summary>
+    /// Triggers when Items Collections Changed.
+    /// </summary>
+    /// <param name="name">string type of name</param>
+    private void RaisePropertyChanged(string name)
+    {
+        if (this.PropertyChanged != null)
+        {
+            this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+    }
+
+    #endregion
+}
+
+
+public class Team : INotifyPropertyChanged
+{
+    #region Private Members
+
+    private string? team;
+    private string? location;
+    private int wins;
+    private int losses;
+    private string? logo;
+    private double pct;
+    private int gb;
+
+    #endregion
+
+    /// <summary>
+    /// Represents the method that will handle the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"></see> event raised when a property is changed on a component
+    /// </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    #region Public properties
+
+    /// <summary>
+    /// Gets or sets the Team.
+    /// </summary>
+    /// <value>The Team.</value>
+    public string? TeamName
+    {
+        get
+        {
+            return team;
+        }
+
+        set
+        {
+            team = value;
+            RaisePropertyChanged("TeamName");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the PCT.
+    /// </summary>
+    /// <value>The PCT.</value>
+    public double PCT
+    {
+        get
+        {
+            return pct;
+        }
+
+        set
+        {
+            pct = value;
+            RaisePropertyChanged("PCT");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the GB.
+    /// </summary>
+    /// <value>The GB.</value>
+    public int GB
+    {
+        get
+        {
+            return gb;
+        }
+
+        set
+        {
+            gb = value;
+            RaisePropertyChanged("GB");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the Wins.
+    /// </summary>
+    /// <value>The Wins.</value>
+    public int Wins
+    {
+        get
+        {
+            return wins;
+        }
+
+        set
+        {
+            wins = value;
+            RaisePropertyChanged("Wins");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the Losses.
+    /// </summary>
+    /// <value>The Losses.</value>
+    public int Losses
+    {
+        get
+        {
+            return losses;
+        }
+
+        set
+        {
+            losses = value;
+            RaisePropertyChanged("Losses");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the team image source.
+    /// </summary>
+    /// <value>The image source for team.</value>
+    public string? Logo
+    {
+        get
+        {
+            return logo;
+        }
+
+        set
+        {
+            logo = value;
+            RaisePropertyChanged("Logo");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the Location.
+    /// </summary>
+    /// <value>The Location.</value>
+    public string? Location
+    {
+        get
+        {
+            return location;
+        }
+
+        set
+        {
+            location = value;
+            RaisePropertyChanged("Location");
+        }
+    }
+
+    #endregion
+
+    public Team(string? teamname, double pct, int gb, int wins, int losses, string? logo, string? location)
+    {
+        this.TeamName = teamname;
+        this.PCT = pct;
+        this.GB = gb;
+        this.Wins = wins;
+        this.Losses = losses;
+        this.Logo = logo;
+        this.Location = location;
+    }
+
+    #region INotifyPropertyChanged implementation
+
+    /// <summary>
+    /// Triggers when Items Collections Changed.
+    /// </summary>
+    /// <param name="propertyName">string type of parameter propertyName</param>
+    public void RaisePropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    #endregion
+}
+
+
+public class OrderInfoViewModel : INotifyPropertyChanged
+{
+    #region private variables
+
+    private string? filtertext = string.Empty;
+    private string? selectedcolumn = "All Columns";
+    private string? selectedcondition = "Contains";
+
+    private ObservableCollection<object>? dataGridSelectedItem;
+    private List<DateTime>? orderedDates;
+    private Random random = new Random();
+    private ObservableCollection<OrderInfo>? ordersInfo;
+    internal FilterChanged? Filtertextchanged;
+
+    #endregion
+
+    #region MainGrid DataSource
+    private string[] genders = new string[]
+    {
+            "Male",
+            "Female",
+            "Female",
+            "Female",
+            "Male",
+            "Male",
+            "Male",
+            "Male",
+            "Male",
+            "Male",
+            "Male",
+            "Male",
+            "Female",
+            "Female",
+            "Female",
+            "Male",
+            "Male",
+            "Male",
+            "Female",
+            "Female",
+            "Female",
+            "Male",
+            "Male",
+            "Male",
+            "Male"
+    };
+
+    private string[] firstNames = new string[]
+    {
+            "Kyle",
+            "Gina",
+            "Irene",
+            "Katie",
+            "Michael",
+            "Oscar",
+            "Ralph",
+            "Torrey",
+            "William",
+            "Bill",
+            "Daniel",
+            "Frank",
+            "Brenda",
+            "Danielle",
+            "Fiona",
+            "Howard",
+            "Jack",
+            "Larry",
+            "Holly",
+            "Jennifer",
+            "Liz",
+            "Pete",
+            "Steve",
+            "Vince",
+            "Zeke",
+             "Gary",
+                "Maciej",
+                "Shelley",
+                "Linda",
+                "Carla",
+                "Carol",
+                "Shannon",
+                "Jauna",
+                "Michael",
+                "Terry",
+                "John",
+                "Gail",
+                "Mark",
+                "Martha",
+                "Julie",
+                "Janeth",
+                "Twanna",
+                "Frank",
+                "Crowley",
+            "Waddell",
+            "Irvine",
+            "Keefe",
+            "Ellis",
+            "Gable",
+            "Mendoza",
+            "Rooney",
+            "Lane",
+            "Landry",
+            "Perry",
+            "Perez",
+            "Newberry",
+            "Betts",
+            "Fitzgerald",
+            "Adams",
+            "Owens",
+            "Thomas",
+            "Doran",
+            "Jefferson",
+            "Spencer",
+            "Vargas",
+            "Grimes",
+            "Edwards",
+            "Stark",
+            "Cruise",
+            "Fitz",
+            "Chief",
+            "Blanc",
+            "Stone",
+            "Williams",
+            "Jobs",
+            "Holmes"
+    };
+    private string[] lastNames = new string[]
+    {
+            "Adams",
+            "Crowley",
+            "Ellis",
+            "Gable",
+            "Irvine",
+            "Keefe",
+            "Mendoza",
+            "Owens",
+            "Rooney",
+            "Waddell",
+            "Thomas",
+            "Betts",
+            "Doran",
+            "Holmes",
+            "Jefferson",
+            "Landry",
+            "Newberry",
+            "Perez",
+            "Spencer",
+            "Vargas",
+            "Grimes",
+            "Edwards",
+            "Stark",
+            "Cruise",
+            "Fitz",
+            "Chief",
+            "Blanc",
+            "Perry",
+            "Stone",
+            "Williams",
+            "Lane",
+            "Jobs"
+    };
+
+    private string[] customerID = new string[]
+    {
+            "Alfki",
+            "Frans",
+            "Merep",
+            "Folko",
+            "Simob",
+            "Warth",
+            "Vaffe",
+            "Furib",
+            "Seves",
+            "Linod",
+            "Riscu",
+            "Picco",
+            "Blonp",
+            "Welli",
+            "Folig"
+    };
+
+    private string[] shipCountry = new string[]
+    {
+            "Argentina",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Canada",
+            "Denmark",
+            "Finland",
+            "France",
+            "Germany",
+            "Ireland",
+            "Italy",
+            "Mexico",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Spain",
+            "Sweden",
+            "UK",
+            "USA",
+    };
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private Dictionary<string, string[]> shipCity = new Dictionary<string, string[]>();
+
+    #endregion
+
+    /// <summary>
+    /// Initializes a new instance of the OrderInfoRepository class.
+    /// </summary>
+    public OrderInfoViewModel()
+    {
+        this.OrdersInfo = this.GetOrderDetails(100);
+        this.DataGridSelectedItems = new ObservableCollection<object>();
+        this.DataGridSelectedItems!.Add(this.OrdersInfo[0]);
+        this.DataGridSelectedItems!.Add(this.OrdersInfo[1]);
+        this.DataGridSelectedItems!.Add(this.OrdersInfo[3]);
+    }
+
+    #region GetOrderDetails
+
+    /// <summary>
+    /// Generates record rows with given count
+    /// </summary>
+    /// <param name="count">integer type of count parameter</param>
+    /// <returns>stored Items Values</returns>
+    public ObservableCollection<OrderInfo> GetOrderDetails(int count)
+    {
+        this.SetShipCity();
+        this.orderedDates = this.GetDateBetween(2000, 2014, count);
+        ObservableCollection<OrderInfo> orderDetails = new ObservableCollection<OrderInfo>();
+        int index = 0;
+        for (int i = 10001; i <= count + 10000; i++)
+        {
+            index = index + 1;
+            var shipcountry = this.shipCountry[this.random.Next(5)];
+            var shipcitycoll = this.shipCity[shipcountry];
+
+            var ord = new OrderInfo()
+            {
+                OrderID = i,
+                CustomerID = this.customerID[this.random.Next(15)],
+                EmployeeID = i - 10000 + 2700,
+                FirstName = index > 72 ? this.firstNames[this.random.Next(40)] : this.firstNames[index],
+                LastName = this.lastNames[this.random.Next(15)],
+                Gender = this.genders[this.random.Next(5)],
+                ShipCountry = shipcountry,
+                ShippingDate = this.orderedDates[i - 10001],
+                Freight = Math.Round(this.random.Next(1000) + this.random.NextDouble(), 2),
+                Price = Math.Round(this.random.Next(1000) + this.random.NextDouble(), 3),
+                IsClosed = (i % this.random.Next(1, 10) > 2) ? true : false,
+                ShipCity = shipcitycoll[this.random.Next(shipcitycoll.Length - 1)],
+            };
+            orderDetails.Add(ord);
+        }
+
+        return orderDetails;
+    }
+
+
+    #endregion
+    /// <summary>
+    /// Used to send a Notification while Filter Changed
+    /// </summary>
+    internal delegate void FilterChanged();
+
+    /// <summary>
+    /// Gets or sets the value of FilterText and notifies user when value gets changed 
+    /// </summary>
+    public string? FilterText
+    {
+        get
+        {
+            return this.filtertext;
+        }
+
+        set
+        {
+            this.filtertext = value;
+            this.OnFilterTextChanged();
+            this.RaisePropertyChanged("FilterText");
+        }
+    }
+
+    public ObservableCollection<object>? DataGridSelectedItems
+    {
+        get
+        {
+            return dataGridSelectedItem;
+        }
+        set
+        {
+            this.dataGridSelectedItem = value;
+            RaisePropertyChanged("DataGridSelectedItems");
+        }
+    }
+
+
+    /// <summary>
+    /// Gets or sets the value of SelectedCondition
+    /// </summary>
+    public string? SelectedCondition
+    {
+        get { return this.selectedcondition; }
+        set { this.selectedcondition = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of SelectedColumn
+    /// </summary>
+    public string? SelectedColumn
+    {
+        get { return this.selectedcolumn; }
+        set { this.selectedcolumn = value; }
+    }
+
+    /// Gets or sets the value of OrdersInfo and notifies user when value gets changed
+    public ObservableCollection<OrderInfo>? OrdersInfo
+    {
+        get
+        {
+            return this.ordersInfo;
+        }
+
+        set
+        {
+            this.ordersInfo = value;
+            this.RaisePropertyChanged("OrdersInfo");
+        }
+    }
+
+    /// <summary>
+    /// used to decide generate records or not
+    /// </summary>
+    /// <param name="o">object type parameter</param>
+    /// <returns>true or false value</returns>
+    public bool FilerRecords(object o)
+    {
+        double res;
+        bool checkNumeric = double.TryParse(this.FilterText, out res);
+        var item = o as OrderInfo;
+        if (item != null && this.FilterText!.Equals(string.Empty) && !string.IsNullOrEmpty(this.FilterText))
+        {
+            return true;
+        }
+        else
+        {
+            if (item != null)
+            {
+                if (checkNumeric && !this.SelectedColumn!.Equals("All Columns") && !this.SelectedCondition!.Equals("Contains"))
+                {
+                    bool result = this.MakeNumericFilter(item, this.SelectedColumn, this.SelectedCondition);
+                    return result;
+                }
+                else if (this.SelectedColumn!.Equals("All Columns"))
+                {
+                    if (item.OrderID!.ToString().ToLower().Contains(this.FilterText!.ToLower()) ||
+                        item.FirstName!.ToString().ToLower().Contains(this.FilterText.ToLower()) ||
+                        item.CustomerID!.ToString().ToLower().Contains(this.FilterText.ToLower()) ||
+                        item.ShipCity!.ToString().ToLower().Contains(this.FilterText.ToLower()) ||
+                        item.ShipCountry!.ToString().ToLower().Contains(this.FilterText.ToLower()))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+                else
+                {
+                    bool result = this.MakeStringFilter(item, this.SelectedColumn, this.SelectedCondition!);
+                    return result;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    /// <summary>
+    /// Used to call the filter text changed()
+    /// </summary>
+    private void OnFilterTextChanged()
+    {
+        if (this.Filtertextchanged != null)
+        {
+            this.Filtertextchanged();
+        }
+    }
+
+    private bool MakeStringFilter(OrderInfo o, string option, string condition)
+    {
+        var value = o.GetType().GetProperty(option);
+        var exactValue = value!.GetValue(o, null);
+        exactValue = exactValue!.ToString()!.ToLower();
+        string text = this.FilterText!.ToLower();
+        var methods = typeof(string).GetMethods();
+
+        if (methods.Count() != 0)
+        {
+            if (condition == "Contains")
+            {
+                var methodInfo = methods.FirstOrDefault(method => method.Name == condition);
+                bool result1 = (bool)methodInfo!.Invoke(exactValue!, new object[] { text })!;
+                return result1;
+            }
+            else if (exactValue.ToString() == text.ToString())
+            {
+                bool result1 = string.Equals(exactValue.ToString(), text.ToString());
+                if (condition == "Equals")
+                {
+                    return result1;
+                }
+                else if (condition == "NotEquals")
+                {
+                    return false;
+                }
+            }
+            else if (condition == "NotEquals")
+            {
+                return true;
+            }
+
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Used decide to make the numeric filter
+    /// </summary>
+    /// <param name="o">o</param>
+    /// <param name="option">option</param>
+    /// <param name="condition">condition</param>
+    /// <returns>true or false value</returns>
+    private bool MakeNumericFilter(OrderInfo o, string option, string condition)
+    {
+        var value = o.GetType().GetProperty(option);
+        var exactValue = value!.GetValue(o, null);
+        double res;
+        bool checkNumeric = double.TryParse(exactValue!.ToString(), out res);
+        if (checkNumeric)
+        {
+            switch (condition)
+            {
+                case "Equals":
+                    try
+                    {
+                        if (exactValue.ToString() == this.FilterText)
+                        {
+                            if (Convert.ToDouble(exactValue) == Convert.ToDouble(this.FilterText))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+
+                    break;
+                case "NotEquals":
+                    try
+                    {
+                        if (Convert.ToDouble(this.FilterText) != Convert.ToDouble(exactValue))
+                        {
+                            return true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                        return true;
+                    }
+
+                    break;
+            }
+        }
+
+        return false;
+    }
+
+    private void RaisePropertyChanged(string name)
+    {
+        if (this.PropertyChanged != null)
+        {
+            this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+    }
+
+    /// <summary>
+    /// Used to generate DateTime and returns the value
+    /// </summary>
+    /// <param name="startYear">integer type of parameter startYear</param>
+    /// <param name="endYear">integer type of parameter endYear</param>
+    /// <param name="count">integer type of parameter count</param>
+    /// <returns>returns the generated DateTime</returns>
+    private List<DateTime> GetDateBetween(int startYear, int endYear, int count)
+    {
+        List<DateTime> date = new List<DateTime>();
+        Random d = new Random(1);
+        Random m = new Random(2);
+        Random y = new Random(startYear);
+        for (int i = 0; i < count; i++)
+        {
+            int year = y.Next(startYear, endYear);
+            int month = m.Next(3, 13);
+            int day = d.Next(1, 31);
+
+            date.Add(new DateTime(year, month, day));
+        }
+
+        return date;
+    }
+
+    /// <summary>
+    /// This method used to store the string items collections Value
+    /// </summary>
+    private void SetShipCity()
+    {
+        string[] argentina = new string[]
+        {
+                "Rosario"
+        };
+
+        string[] austria = new string[]
+        {
+                "Graz",
+                "Salzburg"
+        };
+
+        string[] belgium = new string[]
+        {
+                "Bruxelles",
+                "Charleroi"
+        };
+
+        string[] brazil = new string[]
+        {
+                "Campinas",
+                "Resende",
+                "Recife",
+                "Manaus"
+        };
+
+        string[] canada = new string[]
+        {
+                "Montréal",
+                "Tsawassen",
+                "Vancouver"
+        };
+
+        string[] denmark = new string[]
+        {
+                "Århus",
+                "København"
+        };
+
+        string[] finland = new string[]
+        {
+                "Helsinki",
+                "Oulu"
+        };
+
+        string[] france = new string[]
+        {
+                "Lille",
+                "Lyon",
+                "Marseille",
+                "Nantes",
+                "Paris",
+                "Reims",
+                "Strasbourg",
+                "Toulouse",
+                "Versailles"
+        };
+
+        string[] germany = new string[]
+        {
+                "Aachen",
+                "Berlin",
+                "Brandenburg",
+                "Cunewalde",
+                "Frankfurt",
+                "Köln",
+                "Leipzig",
+                "Mannheim",
+                "München",
+                "Münster",
+                "Stuttgart"
+        };
+
+        string[] ireland = new string[]
+        {
+                "Cork"
+        };
+
+        string[] italy = new string[]
+        {
+                "Bergamo",
+                "Reggio",
+                "Torino"
+        };
+
+        string[] mexico = new string[]
+        {
+                "México D.F."
+        };
+
+        string[] norway = new string[]
+        {
+                "Stavern"
+        };
+
+        string[] poland = new string[]
+        {
+                "Warszawa"
+        };
+
+        string[] portugal = new string[]
+        {
+                "Lisboa"
+        };
+
+        string[] spain = new string[]
+        {
+                "Barcelona",
+                "Madrid",
+                "Sevilla"
+        };
+
+        string[] sweden = new string[]
+        {
+                "Bräcke",
+                "Luleå"
+        };
+
+        string[] switzerland = new string[]
+        {
+                "Bern",
+                "Genève"
+        };
+
+        string[] uk = new string[]
+        {
+                "Colchester",
+                "Hedge End",
+                "London"
+        };
+
+        string[] usa = new string[]
+        {
+                "Albuquerque",
+                "Anchorage",
+                "Boise",
+                "Butte",
+                "Elgin",
+                "Eugene",
+                "Kirkland",
+                "Lander",
+                "Portland",
+                "San Francisco",
+                "Seattle",
+        };
+
+        string[] venezuela = new string[]
+        {
+                "Barquisimeto",
+                "Caracas", "I. de Margarita",
+                "San Cristóbal"
+        };
+
+        this.shipCity.Add("Argentina", argentina);
+        this.shipCity.Add("Austria", austria);
+        this.shipCity.Add("Belgium", belgium);
+        this.shipCity.Add("Brazil", brazil);
+        this.shipCity.Add("Canada", canada);
+        this.shipCity.Add("Denmark", denmark);
+        this.shipCity.Add("Finland", finland);
+        this.shipCity.Add("France", france);
+        this.shipCity.Add("Germany", germany);
+        this.shipCity.Add("Ireland", ireland);
+        this.shipCity.Add("Italy", italy);
+        this.shipCity.Add("Mexico", mexico);
+        this.shipCity.Add("Norway", norway);
+        this.shipCity.Add("Poland", poland);
+        this.shipCity.Add("Portugal", portugal);
+        this.shipCity.Add("Spain", spain);
+        this.shipCity.Add("Sweden", sweden);
+        this.shipCity.Add("Switzerland", switzerland);
+        this.shipCity.Add("UK", uk);
+        this.shipCity.Add("USA", usa);
+        this.shipCity.Add("Venezuela", venezuela);
+    }
+}
+
+
+
+public class OrderInfo : INotifyPropertyChanged
+{
+    #region private variables
+
+    private int orderID;
+    private int employeeID;
+    private string? customerID;
+    private string? firstname;
+    private string? lastname;
+    private string? gender;
+    private string? shipCity;
+    private string? shipCountry;
+    private double freight;
+    private DateTime shippingDate;
+    private bool isClosed;
+    private double price;
+
+    #endregion
+
+    /// <summary>
+    /// Initializes a new instance of the OrderInfo class.
+    /// </summary>
+    public OrderInfo()
+    {
+    }
+
+    /// <summary>
+    /// Represents the method that will handle the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"></see> event raised when a property is changed on a component
+    /// </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    #region Public Properties
+
+    /// <summary>
+    /// Gets or sets the value of OrderID and notifies user when value gets changed
+    /// </summary>
+    public int OrderID
+    {
+        get
+        {
+            return this.orderID;
+        }
+
+        set
+        {
+            this.orderID = value;
+            this.RaisePropertyChanged("OrderID");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of EmployeeID and notifies user when value gets changed
+    /// </summary>
+    public int EmployeeID
+    {
+        get
+        {
+            return this.employeeID;
+        }
+
+        set
+        {
+            this.employeeID = value;
+            this.RaisePropertyChanged("EmployeeID");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of CustomerID and notifies user when value gets changed
+    /// </summary>
+    public string? CustomerID
+    {
+        get
+        {
+            return this.customerID;
+        }
+
+        set
+        {
+            this.customerID = value;
+            this.RaisePropertyChanged("CustomerID");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of FirstName and notifies user when value gets changed
+    /// </summary>
+    public string? FirstName
+    {
+        get
+        {
+            return this.firstname;
+        }
+
+        set
+        {
+            this.firstname = value;
+            this.RaisePropertyChanged("FirstName");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of LastName and notifies user when value gets changed
+    /// </summary>
+    public string? LastName
+    {
+        get
+        {
+            return this.lastname;
+        }
+
+        set
+        {
+            this.lastname = value;
+            this.RaisePropertyChanged("LastName");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of Gender and notifies user when value gets changed
+    /// </summary>
+    public string? Gender
+    {
+        get
+        {
+            return this.gender;
+        }
+
+        set
+        {
+            this.gender = value;
+            this.RaisePropertyChanged("Gender");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of ShipCity and notifies user when value gets changed
+    /// </summary>
+    public string? ShipCity
+    {
+        get
+        {
+            return this.shipCity;
+        }
+
+        set
+        {
+            this.shipCity = value;
+            this.RaisePropertyChanged("ShipCity");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of ShipCountry and notifies user when value gets changed
+    /// </summary>
+    public string? ShipCountry
+    {
+        get
+        {
+            return this.shipCountry;
+        }
+
+        set
+        {
+            this.shipCountry = value;
+            this.RaisePropertyChanged("ShipCountry");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of Freight and notifies user when value gets changed
+    /// </summary>
+    public double Freight
+    {
+        get
+        {
+            return this.freight;
+        }
+
+        set
+        {
+            this.freight = value;
+            this.RaisePropertyChanged("Freight");
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public double Price
+    {
+        get
+        {
+            return this.price;
+        }
+
+        set
+        {
+            this.price = value;
+            this.RaisePropertyChanged("Price");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether IsClosed is true or false and notifies user when value gets changed
+    /// </summary>
+    public bool IsClosed
+    {
+        get
+        {
+            return this.isClosed;
+        }
+
+        set
+        {
+            this.isClosed = value;
+            this.RaisePropertyChanged("IsClosed");
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the value of ShippingDate and notifies user when value gets changed
+    /// </summary>
+    public DateTime ShippingDate
+    {
+        get
+        {
+            return this.shippingDate;
+        }
+
+        set
+        {
+            this.shippingDate = value;
+            this.RaisePropertyChanged("ShippingDate");
+        }
+    }
+
+    #endregion
+
+    #region INotifyPropertyChanged implementation
+
+    /// <summary>
+    /// Triggers when Items Collections Changed.
+    /// </summary>
+    /// <param name="name">string type parameter name</param>
+    private void RaisePropertyChanged(string name)
+    {
+        if (this.PropertyChanged != null)
+        {
+            this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+    }
+
+    #endregion
 }

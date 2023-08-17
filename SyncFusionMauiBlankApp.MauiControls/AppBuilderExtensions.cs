@@ -9,7 +9,7 @@ public static class AppBuilderExtensions
     {
         //Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Your_Key");
         return builder
-        .UseMauiCommunityToolkit()
+        //.UseMauiCommunityToolkit()
                     .ConfigureSyncfusionCore();
     }
 }
