@@ -1,0 +1,10 @@
+{
+  "profiles": {
+	"SyncFusionMauiBlankApp.Windows (Package)": {
+	  "commandName": "MsixPackage"
+	},
+	"SyncFusionMauiBlankApp.Windows (Unpackaged)": {
+	  "commandName": "Project"
+	}
+  }
+}

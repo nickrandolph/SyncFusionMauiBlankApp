@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "SyncFusionMauiBlankApp.sln",
+    "projects": [
+      "SyncFusionMauiBlankApp.Mobile\\SyncFusionMauiBlankApp.Mobile.csproj",
+      "SyncFusionMauiBlankApp.Base\\SyncFusionMauiBlankApp.Base.csproj",
+      "SyncFusionMauiBlankApp\\SyncFusionMauiBlankApp.csproj"
+    ]
+  }
+}
