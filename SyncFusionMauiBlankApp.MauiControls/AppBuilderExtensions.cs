@@ -13,8 +13,8 @@ public static class AppBuilderExtensions
                     .ConfigureSyncfusionCore()
                     .ConfigureFonts(fonts =>
                     {
-                        fonts.AddFont("SyncFusionMauiBlankApp/Assets/Fonts/OpenSans-Regular.ttf", "OpenSansRegular");
-                        fonts.AddFont("SyncFusionMauiBlankApp/Assets/Fonts/OpenSans-Semibold.ttf", "OpenSansSemibold");
+                        fonts.AddFont("SyncFusionMauiBlankApp/Assets/Fonts/regular.ttf", "OpenSansRegular");
+                        fonts.AddFont("SyncFusionMauiBlankApp/Assets/Fonts/semibold.ttf", "OpenSansSemibold");
                     });
     }
 }

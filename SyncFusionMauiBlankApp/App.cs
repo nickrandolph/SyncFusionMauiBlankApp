@@ -1,5 +1,6 @@
 #if ANDROID
 using Android.Content;
+using Android.Runtime;
 #endif
 using CommunityToolkit.Maui;
 using Microsoft.Maui;
@@ -40,9 +41,17 @@ builder.Services.AddTransient<Context>(_ => ContextHelper.Current);
                  builder.UseMauiControls();
 			 }
 #if WINDOWS
-             ,appAction: mauiApp => this.Services =mauiApp.Services
+             ,appAction: mauiApp => {
+				 this.Services = mauiApp.Services;
+				 this.Application = mauiApp.Services.GetRequiredService<IApplication>();
+			 }
+#elif ANDROID
+             , appAction: mauiApp => {
+				 var mock = new MockMauiApplication(0, default, mauiApp);
+             }
+
 #endif
-			 );
+             );
 
 		// Do not repeat app initialization when the Window already has content,
 		// just ensure that the window is active
@@ -79,3 +88,19 @@ builder.Services.AddTransient<Context>(_ => ContextHelper.Current);
 		throw new InvalidOperationException($"Failed to load {e.SourcePageType.FullName}: {e.Exception}");
 	}
 }
+
+#if ANDROID
+public class MockMauiApplication : Microsoft.Maui.MauiApplication
+{
+    public MockMauiApplication(nint handle, JniHandleOwnership ownership, MauiApp mauiApp) : base(handle, ownership)
+    {
+        this.Services = mauiApp.Services;
+        this.Application = mauiApp.Services.GetRequiredService<IApplication>();
+    }
+
+    protected override MauiApp CreateMauiApp()
+    {
+        throw new NotImplementedException();
+    }
+}
+#endif

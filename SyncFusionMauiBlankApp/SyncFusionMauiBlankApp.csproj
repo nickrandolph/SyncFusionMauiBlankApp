@@ -61,4 +61,13 @@
 	  <MauiFont Include="Assets\Fonts\OpenSans-Semibold.ttf" />
 	  <MauiFont Include="Assets\Fonts\OpenSans-Semibold.ttf" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="Assets\Fonts\regular.ttf">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\Fonts\semibold.ttf">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
 </Project>
