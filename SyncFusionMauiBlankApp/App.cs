@@ -49,6 +49,10 @@ builder.Services.AddTransient<Context>(_ => ContextHelper.Current);
              , appAction: mauiApp => {
 				 var mock = new MockMauiApplication(0, default, mauiApp);
              }
+#elif __IOS__
+             , appAction: mauiApp => {
+				 var mock = new MockMauiApplication(mauiApp);
+             }
 
 #endif
              );
@@ -93,6 +97,24 @@ builder.Services.AddTransient<Context>(_ => ContextHelper.Current);
 public class MockMauiApplication : Microsoft.Maui.MauiApplication
 {
     public MockMauiApplication(nint handle, JniHandleOwnership ownership, MauiApp mauiApp) : base(handle, ownership)
+    {
+        this.Services = mauiApp.Services;
+        this.Application = mauiApp.Services.GetRequiredService<IApplication>();
+    }
+
+    protected override MauiApp CreateMauiApp()
+    {
+        throw new NotImplementedException();
+    }
+}
+#endif
+
+
+
+#if __IOS__
+public class MockMauiApplication : Microsoft.Maui.MauiUIApplicationDelegate
+{
+    public MockMauiApplication(MauiApp mauiApp) : base()
     {
         this.Services = mauiApp.Services;
         this.Application = mauiApp.Services.GetRequiredService<IApplication>();
