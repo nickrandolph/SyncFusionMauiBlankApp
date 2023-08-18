@@ -1,11 +1,27 @@
+#if ANDROID
+using Android.Content;
+#endif
 using CommunityToolkit.Maui;
+using Microsoft.Maui;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Hosting;
+using Uno.UI;
 
 namespace SyncFusionMauiBlankApp;
-
+#if WINDOWS
+public class App : MauiWinUIApplication
+#else
 public class App : Application
+#endif
 {
 	protected Window? MainWindow { get; private set; }
 
+#if WINDOWS
+	protected override MauiApp CreateMauiApp()
+    {
+        throw new NotImplementedException();
+    }
+#endif
 	protected override void OnLaunched(LaunchActivatedEventArgs args)
 	{
 #if NET6_0_OR_GREATER && WINDOWS && !HAS_UNO
@@ -14,8 +30,19 @@ public class App : Application
 		MainWindow = Microsoft.UI.Xaml.Window.Current;
 #endif
 
-		this.UseMauiEmbedding<MauiControls.App>(maui => maui
-					.UseMauiControls());
+		this.UseMauiEmbedding<MauiControls.App>(
+			 configure: builder =>
+			 {
+#if ANDROID
+builder.Services.AddTransient<Context>(_ => ContextHelper.Current);
+#endif
+
+                 builder.UseMauiControls();
+			 }
+#if WINDOWS
+             ,appAction: mauiApp => this.Services =mauiApp.Services
+#endif
+			 );
 
 		// Do not repeat app initialization when the Window already has content,
 		// just ensure that the window is active

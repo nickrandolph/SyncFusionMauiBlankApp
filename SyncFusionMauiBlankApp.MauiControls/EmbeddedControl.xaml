@@ -78,7 +78,7 @@
 					  HeightRequest="120"
 					  WidthRequest="400" />
 		<Label Text="Square" />-->
-		<!--<chart:SfCircularChart x:Name="Chart"
+		<chart:SfCircularChart x:Name="Chart"
 							   HorizontalOptions="Fill"
 							   VerticalOptions="Fill"
 							   HeightRequest="400" WidthRequest="400">
@@ -117,7 +117,7 @@
 					</chart:PieSeries.DataLabelSettings>
 				</chart:PieSeries>
 			</chart:SfCircularChart.Series>
-		</chart:SfCircularChart>-->
+		</chart:SfCircularChart>
 		<!--<sfgrid:SfDataGrid x:Name="dataGrid"
 						   Margin="{StaticResource margin}"
 						   AutoGenerateColumnsMode="None"
@@ -187,7 +187,7 @@
 			</sfgrid:SfDataGrid.Columns>
 		</sfgrid:SfDataGrid>-->
 
-		<sfgrid:SfDataGrid IndentColumnWidth="40"
+		<!--<sfgrid:SfDataGrid IndentColumnWidth="40"
 						   Margin="{StaticResource margin}"
 						   x:Name="dataGrid"
 						   GroupCaptionTextFormat="{}{ColumnName} : {Key} - {ItemsCount} Item(s)"
@@ -236,6 +236,6 @@
 				<sfgrid:GroupColumnDescription ColumnName="ShipCountry" />
 				<sfgrid:GroupColumnDescription ColumnName="ShipCity" />
 			</sfgrid:SfDataGrid.GroupColumnDescriptions>
-		</sfgrid:SfDataGrid>
+		</sfgrid:SfDataGrid>-->
 	</VerticalStackLayout>
 </ContentView>

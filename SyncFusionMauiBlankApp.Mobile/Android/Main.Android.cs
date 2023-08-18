@@ -9,6 +9,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Com.Nostra13.Universalimageloader.Core;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.UI.Xaml.Media;
 
 namespace SyncFusionMauiBlankApp.Droid;
@@ -26,6 +27,8 @@ public class Application : Microsoft.UI.Xaml.NativeApplication
 		: base(() => new AppHead(), javaReference, transfer)
 	{
 		ConfigureUniversalImageLoader();
+
+		Platform.Init(this);
 	}
 
 	private static void ConfigureUniversalImageLoader()

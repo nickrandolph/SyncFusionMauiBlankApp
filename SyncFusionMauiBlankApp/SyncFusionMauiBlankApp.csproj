@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) or '$(EnableWindowsTargeting)' == 'true'">$(TargetFrameworks);net7.0-windows10.0.19041</TargetFrameworks>
 		<TargetFrameworks>$(TargetFrameworks);net7.0;net7.0-ios;net7.0-android;net7.0-maccatalyst</TargetFrameworks>
@@ -53,5 +53,12 @@
 	<ItemGroup>
 		<UnoImage Include="Assets\**\*.svg" />
 		<UpToDateCheckInput Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Include="Assets\Fonts\OpenSans-Regular.ttf" />
+	  <MauiFont Include="Assets\Fonts\OpenSans-Regular.ttf" />
+	  <MauiFont Include="Assets\Fonts\OpenSans-Semibold.ttf" />
+	  <MauiFont Include="Assets\Fonts\OpenSans-Semibold.ttf" />
 	</ItemGroup>
 </Project>

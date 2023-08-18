@@ -10,6 +10,11 @@ public static class AppBuilderExtensions
         //Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Your_Key");
         return builder
         //.UseMauiCommunityToolkit()
-                    .ConfigureSyncfusionCore();
+                    .ConfigureSyncfusionCore()
+                    .ConfigureFonts(fonts =>
+                    {
+                        fonts.AddFont("SyncFusionMauiBlankApp/Assets/Fonts/OpenSans-Regular.ttf", "OpenSansRegular");
+                        fonts.AddFont("SyncFusionMauiBlankApp/Assets/Fonts/OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    });
     }
 }
