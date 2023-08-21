@@ -6,23 +6,24 @@ using CommunityToolkit.Maui;
 using Microsoft.Maui;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Hosting;
+using Uno.Extensions.Maui.Platform;
 using Uno.UI;
 
 namespace SyncFusionMauiBlankApp;
-#if WINDOWS
-public class App : MauiWinUIApplication
-#else
-public class App : Application
-#endif
+//#if WINDOWS
+//public class App : MauiWinUIApplication
+//#else
+public class App : EmbeddingApplication
+//#endif
 {
 	protected Window? MainWindow { get; private set; }
 
-#if WINDOWS
-	protected override MauiApp CreateMauiApp()
-    {
-        throw new NotImplementedException();
-    }
-#endif
+//#if WINDOWS
+//	protected override MauiApp CreateMauiApp()
+//    {
+//        throw new NotImplementedException();
+//    }
+//#endif
 	protected override void OnLaunched(LaunchActivatedEventArgs args)
 	{
 #if NET6_0_OR_GREATER && WINDOWS && !HAS_UNO
@@ -34,27 +35,27 @@ public class App : Application
 		this.UseMauiEmbedding<MauiControls.App>(
 			 configure: builder =>
 			 {
-#if ANDROID
-builder.Services.AddTransient<Context>(_ => ContextHelper.Current);
-#endif
+//#if ANDROID
+//builder.Services.AddTransient<Context>(_ => ContextHelper.Current);
+//#endif
 
                  builder.UseMauiControls();
 			 }
-#if WINDOWS
-             ,appAction: mauiApp => {
-				 this.Services = mauiApp.Services;
-				 this.Application = mauiApp.Services.GetRequiredService<IApplication>();
-			 }
-#elif ANDROID
-             , appAction: mauiApp => {
-				 var mock = new MockMauiApplication(0, default, mauiApp);
-             }
-#elif __IOS__
-             , appAction: mauiApp => {
-				 var mock = new MockMauiApplication(mauiApp);
-             }
+//#if WINDOWS
+//             ,appAction: mauiApp => {
+//				 this.Services = mauiApp.Services;
+//				 this.Application = mauiApp.Services.GetRequiredService<IApplication>();
+//			 }
+//#elif ANDROID
+//             , appAction: mauiApp => {
+//				 var mock = new MockMauiApplication(0, default, mauiApp);
+//             }
+//#elif __IOS__
+//             , appAction: mauiApp => {
+//				 var mock = new MockMauiApplication(mauiApp);
+//             }
 
-#endif
+//#endif
              );
 
 		// Do not repeat app initialization when the Window already has content,
